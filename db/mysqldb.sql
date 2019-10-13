@@ -1,5 +1,5 @@
 -- Used for making (many) updates while building 
--- 10/13 update: commented out tables that do not have a PK>FK relationship 
+-- 10/13 update: commented out tables that do not have a PK >-FK relationship 
 drop table DepartmentData.departments CASCADE;
 -- drop table DepartmentData.dept_emp CASCADE;
 -- drop table DepartmentData.dept_manager CASCADE;
@@ -70,7 +70,7 @@ to_date date
 -- ALTER TABLE ORDERS 
 --    ADD FOREIGN KEY (Customer_ID) REFERENCES CUSTOMERS (ID);
 
--- Testing/creating starting code for selct statements
+-- Testing/creating starting code for select statements
 SELECT * FROM DepartmentData.departments;
 SELECT * FROM DepartmentData.dept_emp;
 SELECT * FROM DepartmentData.dept_manager;
@@ -80,7 +80,8 @@ SELECT * FROM EmployeeData.titles;
 SELECT * FROM EmployeeData.salaries;
 
 
--- Objectives: Using JOIN, UNION or Subqueries
+-- DATA ANALYSIS OBJECTIVES: 
+--(Using JOIN, UNION or Subqueries)
 
 -- 1. List the following details of each employee: employee number, last name, first name, gender, and salary
 
@@ -90,6 +91,7 @@ SELECT emp_no, last_name, first_name, gender FROM EmployeeData.employees;
 -- Get the rest from the salary table:
 SELECT emp_no, salary FROM EmployeeData.salaries;
 
+-- join syntax example:
 -- SELECT column-names
 --   FROM table-name1 (INNER) JOIN table-name2 
 --     ON column-name1 = column-name2
@@ -100,7 +102,7 @@ SELECT employees.emp_no, employees.last_name, employees.first_name, employees.ge
 	FROM EmployeeData.employees INNER JOIN EmployeeData.salaries
 		ON employees.emp_no = salaries.emp_no;
 
--- DROP TABLE EmployeeData.emp_salaries; 
+-- DROP TABLE EmployeeData.emp_salaries; (prev created tbl to insert into but this is not needed so dropped tbl   )
 
 -- Let's put that query into a table:
 SELECT employees.emp_no, employees.last_name, employees.first_name, employees.gender, salaries.salary
@@ -109,3 +111,40 @@ SELECT employees.emp_no, employees.last_name, employees.first_name, employees.ge
 			ON employees.emp_no = salaries.emp_no;
 			
 SELECT * FROM EmployeeData.emp_salaries; 
+
+-- 2. List employees who were hired in 1986:
+
+SELECT emp_no, hire_date, first_name, last_name 
+	FROM EmployeeData.employees
+		WHERE hire_date BETWEEN '1986-01-01' AND '1986-12-31';
+
+-- making the hire date cronological 
+SELECT emp_no, hire_date, first_name, last_name 
+	FROM EmployeeData.employees
+		WHERE hire_date BETWEEN '1986-01-01' AND '1986-12-31'
+			ORDER BY hire_date;
+
+--creating the 1986 employess hired data table
+SELECT emp_no, hire_date, first_name, last_name 
+	INTO EmployeeData.employees_hired_1986
+		FROM EmployeeData.employees
+			WHERE hire_date BETWEEN '1986-01-01' AND '1986-12-31'
+				ORDER BY hire_date;
+				
+SELECT * FROM EmployeeData.employees_hired_1986; 
+
+-- 3. List the manager of each department with the following information: department number, department name, the manager's employee number, last name, first name, and start and end employment dates.
+
+-- 4. List the department of each employee with the following information: employee number, last name, first name, and department name.
+
+-- 5. List all employees whose first name is "Hercules" and last names begin with "B."
+
+-- 6. List all employees in the Sales department, including their employee number, last name, first name, and department name.
+
+-- 7. List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
+
+-- 8. In descending order, list the frequency count of employee last names, i.e., how many employees share each last name
+
+
+
+
