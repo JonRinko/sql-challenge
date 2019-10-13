@@ -1,13 +1,26 @@
 -- Used for making (many) updates while building 
+-- 10/13 update: commented out tables that do not have a PK>FK relationship 
 drop table DepartmentData.departments CASCADE;
-drop table DepartmentData.dept_emp CASCADE;
-drop table DepartmentData.dept_manager CASCADE;
+-- drop table DepartmentData.dept_emp CASCADE;
+-- drop table DepartmentData.dept_manager CASCADE;
 drop table EmployeeData.employees CASCADE;
-drop table EmployeeData.titles CASCADE;
-drop table EmployeeData.salaries CASCADE;
+-- drop table EmployeeData.titles CASCADE;
+-- drop table EmployeeData.salaries CASCADE;
+
+-- 10/13 update: removed cascade from tables w/out PK in dependent tables (test later) 
+
+-- drop table DepartmentData.departments;
+drop table DepartmentData.dept_emp;
+drop table DepartmentData.dept_manager;
+-- drop table EmployeeData.employees;
+drop table EmployeeData.titles;
+drop table EmployeeData.salaries;
 
 CREATE SCHEMA DepartmentData;
 CREATE SCHEMA EmployeeData;
+
+
+-- DepartmentData Schema Tables: 
 
 CREATE TABLE DepartmentData.departments (
 dept_no varchar(100) primary key,
@@ -28,7 +41,7 @@ from_date date,
 to_date date
 );
 
-------
+-- EmployeeData Schema Tables:
 
 CREATE TABLE EmployeeData.employees(
 emp_no varchar primary key,
@@ -53,11 +66,11 @@ from_date date,
 to_date date
 );
 
--- use below code to alter/add fk
+-- use below code to alter/add fk (did not use this code - used drops instead and recreated tables)
 -- ALTER TABLE ORDERS 
 --    ADD FOREIGN KEY (Customer_ID) REFERENCES CUSTOMERS (ID);
 
--- Testing 
+-- Testing/creating starting code for selct statements
 SELECT * FROM DepartmentData.departments;
 SELECT * FROM DepartmentData.dept_emp;
 SELECT * FROM DepartmentData.dept_manager;
@@ -67,5 +80,32 @@ SELECT * FROM EmployeeData.titles;
 SELECT * FROM EmployeeData.salaries;
 
 
--- Analysis Using SQL!
--- List the following details of each employee: employee number, last name, first name, gender, and salary
+-- Objectives: Using JOIN, UNION or Subqueries
+
+-- 1. List the following details of each employee: employee number, last name, first name, gender, and salary
+
+-- From emp table we can get most of this data:
+SELECT emp_no, last_name, first_name, gender FROM EmployeeData.employees;
+
+-- Get the rest from the salary table:
+SELECT emp_no, salary FROM EmployeeData.salaries;
+
+-- SELECT column-names
+--   FROM table-name1 (INNER) JOIN table-name2 
+--     ON column-name1 = column-name2
+--  WHERE condition
+
+-- all together now:
+SELECT employees.emp_no, employees.last_name, employees.first_name, employees.gender, salaries.salary
+	FROM EmployeeData.employees INNER JOIN EmployeeData.salaries
+		ON employees.emp_no = salaries.emp_no;
+
+-- DROP TABLE EmployeeData.emp_salaries; 
+
+-- Let's put that query into a table:
+SELECT employees.emp_no, employees.last_name, employees.first_name, employees.gender, salaries.salary
+	INTO EmployeeData.emp_salaries
+		FROM EmployeeData.employees INNER JOIN EmployeeData.salaries
+			ON employees.emp_no = salaries.emp_no;
+			
+SELECT * FROM EmployeeData.emp_salaries; 
