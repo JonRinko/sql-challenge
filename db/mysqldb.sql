@@ -1,7 +1,7 @@
--- Used for making (many) updates while building
--- drop table DepartmentData.departments CASCADE;
--- drop table DepartmentData.dept_emp CASCADE;
--- drop table DepartmentData.dept_manager CASCADE;
+-- Used for making (many) updates while building 
+drop table DepartmentData.departments CASCADE;
+drop table DepartmentData.dept_emp CASCADE;
+drop table DepartmentData.dept_manager CASCADE;
 drop table EmployeeData.employees CASCADE;
 drop table EmployeeData.titles CASCADE;
 drop table EmployeeData.salaries CASCADE;
@@ -57,3 +57,15 @@ to_date date
 -- ALTER TABLE ORDERS 
 --    ADD FOREIGN KEY (Customer_ID) REFERENCES CUSTOMERS (ID);
 
+-- Testing 
+SELECT * FROM DepartmentData.departments;
+SELECT * FROM DepartmentData.dept_emp;
+SELECT * FROM DepartmentData.dept_manager;
+
+SELECT * FROM EmployeeData.employees;
+SELECT * FROM EmployeeData.titles;
+SELECT * FROM EmployeeData.salaries;
+
+
+-- Analysis Using SQL!
+-- List the following details of each employee: employee number, last name, first name, gender, and salary
