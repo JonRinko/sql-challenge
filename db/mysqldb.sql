@@ -133,7 +133,40 @@ SELECT emp_no, hire_date, first_name, last_name
 				
 SELECT * FROM EmployeeData.employees_hired_1986; 
 
--- 3. List the manager of each department with the following information: department number, department name, the manager's employee number, last name, first name, and start and end employment dates.
+-- 3. List the manager of each department with the following information: 
+--        department number, department name, the manager's employee number,
+--			last name, first name, and start and end employment dates.
+
+-- *** since many tables have a 'to_date' and none have and 'end employment date,' I am assuming the dates in these 
+-- tables are the end employment dates and not specifically relating to the tables themselves, such as the date they
+-- stopped managing the department but not necessarily left the company, or the date the title was held.  
+-- ** Using employees.hire_date instead of 'from_date' for the start employment to avoid ambiguous data or 
+-- having to test for equality between from and hire columns. 
+
+
+-- get dept no, name manager no and to date in one table: 
+SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no as manager_no, dept_manager.to_date
+	INTO Departmentdata.dep_name_mgr_info
+		FROM Departmentdata.departments INNER JOIN Departmentdata.dept_manager
+			ON departments.dept_no = dept_manager.dept_no;
+
+SELECT * FROM departmentdata.dep_name_mgr_info;
+-- 
+-- employees.emp_no as Emp_Number, (employees.last_name) || ', ' || (employees.first_name) as Manager_Name,
+-- employees.hire_date as Start_date
+-- 	FROM DepartmentData.departments INNER JOIN EmployeeData.employees
+-- 		ON dept_manager.emp_no = employees.emp_no;
+
+
+
+-- one more thing to add
+-- dept_emp.to_date as End_Date
+
+
+
+
+
+
 
 -- 4. List the department of each employee with the following information: employee number, last name, first name, and department name.
 
