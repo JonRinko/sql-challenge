@@ -74,18 +74,18 @@ SELECT * FROM EmployeeData.salaries;
 -- DATA ANALYSIS OBJECTIVES: 
 --(Using JOIN, UNION or Subqueries)
 
+-- join syntax example:
+-- SELECT column-names
+--   FROM table-name1 (INNER) JOIN table-name2 
+--     ON column-name1 = column-name2
+--  WHERE condition
+
 -- 1. List the following details of each employee: employee number, last name, first name, gender, and salary
 
 SELECT emp_no, last_name, first_name, gender FROM EmployeeData.employees;
 
 -- Get the rest from the salary table:
 SELECT emp_no, salary FROM EmployeeData.salaries;
-
--- join syntax example:
--- SELECT column-names
---   FROM table-name1 (INNER) JOIN table-name2 
---     ON column-name1 = column-name2
---  WHERE condition
 
 -- all together now:
 SELECT employees.emp_no, employees.last_name, employees.first_name, employees.gender, salaries.salary
@@ -108,7 +108,7 @@ SELECT emp_no, hire_date, first_name, last_name
 		WHERE hire_date BETWEEN '1986-01-01' AND '1986-12-31'
 			ORDER BY hire_date;
 
---creating the 1986 employess hired data table
+--creating the 1986 employees hired data table
 SELECT emp_no, hire_date, first_name, last_name 
 	INTO EmployeeData.employees_hired_1986
 		FROM EmployeeData.employees
@@ -143,6 +143,20 @@ SELECT * FROM DepartmentData.combined_managers;
 DROP TABLE DepartmentData.combined_managers;
 
 -- 4. List the department of each employee with the following information: employee number, last name, first name, and department name.
+-- need to join 3 tables: employees, dept_emp and departments
+--syntax:
+-- SELECT t1.col, t3.col FROM table1 join table2 ON table1.primarykey = table2.foreignkey
+--                                   join table3 ON table2.primarykey = table3.foreignkey
+
+--mysql> SELECT emp_name, dept_name FROM Employee e JOIN Register r ON e.emp_id=r.emp_id 
+--JOIN Department d ON r.dept_id=d.dept_id
+
+
+SELECT employees.emp_no, employees.last_name, employees.first_name, departments.dept_name
+		FROM EmployeeData.employees INNER JOIN DepartmentData.dept_emp ON employees.emp_no = dept_emp.emp_no
+									INNER JOIN DepartmentData.departments ON dept_emp.dept_no = departments.dept_no
+
+--celebrate!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 -- 5. List all employees whose first name is "Hercules" and last names begin with "B."
 
