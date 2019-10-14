@@ -160,12 +160,43 @@ SELECT employees.emp_no, employees.last_name, employees.first_name, departments.
 	INTO EmployeeData.combined_employee_data
 		FROM EmployeeData.employees INNER JOIN DepartmentData.dept_emp ON employees.emp_no = dept_emp.emp_no
 									INNER JOIN DepartmentData.departments ON dept_emp.dept_no = departments.dept_no
+									
+SELECT * FROM EmployeeData.combined_employee_data
+	WHERE dept_name LIKE '%Sales%'
+
+-- 7. List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
 SELECT * FROM EmployeeData.combined_employee_data
 	WHERE dept_name LIKE '%Sales%' OR dept_name LIKE '%Development%'
--- 7. List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
-
 -- 8. In descending order, list the frequency count of employee last names, i.e., how many employees share each 
 --last name.
+-- from stack overflow:
+--  Select column, count(*)
+--  From   table
+--  Group By column
+
+SELECT employees.last_name, count(*)
+	FROM EmployeeData.employees
+			GROUP BY employees.last_name
+				ORDER BY last_name DESC;  --I'm pretty sure the instruction want it ordered by last name
+				
+-- 				but we can also order by the count just in case:
+
+SELECT employees.last_name, count(*)
+	FROM EmployeeData.employees
+			GROUP BY employees.last_name
+				ORDER BY count DESC;
+				
+-- Submission
+-- Create an image file of your ERD. - needs updating 
+
+-- Create a .sql file of your table schemata. - needs to be completed
+
+-- Create a .sql file of your queries. - done
+
+-- (Optional) Create a Jupyter Notebook of the bonus analysis. - started not completed
+
+-- Create and upload a repository with the above files to GitHub and post a link on BootCamp Spot. - not done
+
 
 --Comment Section: 
 -- illogical data in 'to_date' columns of all except salaries.csv. 
@@ -175,7 +206,6 @@ SELECT * FROM EmployeeData.combined_employee_data
 -- ALTER TABLE ORDERS 
 --    ADD FOREIGN KEY (Customer_ID) REFERENCES CUSTOMERS (ID);
 
--- Figure out how to do objective 3 in less steps... solved for objective 4 see below
 -- review assigning alias to table names...
 
 -- joining 3 tables:
