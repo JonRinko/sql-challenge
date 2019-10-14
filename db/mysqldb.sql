@@ -144,13 +144,6 @@ DROP TABLE DepartmentData.combined_managers;
 
 -- 4. List the department of each employee with the following information: employee number, last name, first name, and department name.
 -- need to join 3 tables: employees, dept_emp and departments
---syntax:
--- SELECT t1.col, t3.col FROM table1 join table2 ON table1.primarykey = table2.foreignkey
---                                   join table3 ON table2.primarykey = table3.foreignkey
-
---mysql> SELECT emp_name, dept_name FROM Employee e JOIN Register r ON e.emp_id=r.emp_id 
---JOIN Department d ON r.dept_id=d.dept_id
-
 
 SELECT employees.emp_no, employees.last_name, employees.first_name, departments.dept_name
 		FROM EmployeeData.employees INNER JOIN DepartmentData.dept_emp ON employees.emp_no = dept_emp.emp_no
@@ -159,6 +152,8 @@ SELECT employees.emp_no, employees.last_name, employees.first_name, departments.
 --celebrate!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 -- 5. List all employees whose first name is "Hercules" and last names begin with "B."
+SELECT * FROM EmployeeData.employees
+	WHERE employees.first_name LIKE '%Hercules%' AND employees.last_name LIKE '%B%';
 
 -- 6. List all employees in the Sales department, including their employee number, last name, first name, and department name.
 
@@ -175,8 +170,15 @@ SELECT employees.emp_no, employees.last_name, employees.first_name, departments.
 -- ALTER TABLE ORDERS 
 --    ADD FOREIGN KEY (Customer_ID) REFERENCES CUSTOMERS (ID);
 
--- Figure out how to do objective 3 in less steps.
+-- Figure out how to do objective 3 in less steps... solved for objective 4 see below
 -- review assigning alias to table names...
+
+-- joining 3 tables:
+-- SELECT t1.col, t3.col FROM table1 join table2 ON table1.primarykey = table2.foreignkey
+--                                   join table3 ON table2.primarykey = table3.foreignkey
+
+--mysql> SELECT emp_name, dept_name FROM Employee e JOIN Register r ON e.emp_id=r.emp_id 
+--JOIN Department d ON r.dept_id=d.dept_id
 
 
 
