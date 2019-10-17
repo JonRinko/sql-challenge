@@ -181,17 +181,9 @@ SELECT employees.last_name, count(*)
 	FROM EmployeeData.employees
 			GROUP BY employees.last_name
 				ORDER BY count DESC;
-				
--- Submission
--- Create an image file of your ERD. - needs updating 
+		
 
--- Create a .sql file of your table schemata. - needs to be completed
 
--- Create a .sql file of your queries. - done
-
--- (Optional) Create a Jupyter Notebook of the bonus analysis. - started not completed
-
--- Create and upload a repository with the above files to GitHub and post a link on BootCamp Spot. - not done
 
 
 --Comment Section: 
