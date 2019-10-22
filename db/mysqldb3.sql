@@ -1,4 +1,9 @@
--- Database: mydb
+-- Table: departmentdata.combined_managers
+
+-- DROP TABLE departmentdata.combined_managers;
+
+CREATE TABLE departmentdata.combined_managers
+(-- Database: mydb
 
 -- DROP DATABASE mydb;
 
@@ -181,8 +186,40 @@ SELECT employees.last_name, count(*)
 	FROM EmployeeData.employees
 			GROUP BY employees.last_name
 				ORDER BY count DESC;
-		
 
+	
+-- Bonus -- 
+-- combine emp_salaries table with titles: 
+	
+-- join syntax example:
+-- SELECT column-names
+--   FROM table-name1 (INNER) JOIN table-name2 
+--     ON column-name1 = column-name2
+--  WHERE condition
+SELECT emp_salaries.emp_no, titles.title, emp_salaries.salary 
+	INTO EmployeeData.title_and_salary 
+		FROM EmployeeData.emp_salaries INNER JOIN EmployeeData.titles
+			ON emp_salaries.emp_no = titles.emp_no
+	
+SELECT * FROM EmployeeData.emp_salaries
+	
+	
+-- Get average salary by title -- 
+	
+SELECT titles.title, avg(emp_salaries.salary) 
+	INTO EmployeeData.avg_salary
+		FROM EmployeeData.emp_salaries NATURAL JOIN EmployeeData.titles
+			GROUP BY title;
+	
+SELECT * FROM EmployeeData.avg_salary;
+	
+	
+-- Epilogue -- 
+-- 	"Search your ID number." You look down at your badge to see that your employee ID number is 499942.
+-- Search your employee #
+	
+	SELECT * FROM EmployeeData.emp_salaries
+		WHERE emp_no = '499942'
 
 
 
@@ -215,3 +252,16 @@ SELECT employees.last_name, count(*)
 
 COMMENT ON DATABASE mydb
     IS 'my db used for sql challenge';
+    dept_no character varying(100) COLLATE pg_catalog."default",
+    dept_name character varying(100) COLLATE pg_catalog."default",
+    manager_emp_no integer,
+    last_name character(200) COLLATE pg_catalog."default",
+    first_name character varying(100) COLLATE pg_catalog."default",
+    start_date date,
+    end_date date
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE departmentdata.combined_managers
+    OWNER to postgres;
